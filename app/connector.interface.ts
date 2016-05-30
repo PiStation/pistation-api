@@ -1,3 +1,2 @@
-import {PiStationServer} from "./server";
-import * as PiStation from '../../client/PiStation';
-import {ModuleEvent} from "../../client/PiStation";
+import {Server} from "./server";
+import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";

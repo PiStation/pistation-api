@@ -1,11 +1,9 @@
-
-import {PiStationServer} from "../../app/server";
-import * as PiStation from "../../../client/PiStation";
-import {AbstractModule} from "../../../client/PiStation";
+import {Server} from "../../app/server.ts";
+import * as PiStation from "../../node_modules/pistation-definitions/PiStation.ts";
 import {Observable} from 'rxjs/Rx';
 import * as Rx from 'rxjs/Rx';
 
-export class TestModule extends PiStation.Module implements AbstractModule {
+export class TestModule extends PiStation.Module implements PiStation.AbstractModule {
     static moduleId:string;
     static DIM_LIGHT_EVENT = new PiStation.ModuleEvent(TestModule.moduleId,'dimLight');
 

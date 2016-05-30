@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "pretty": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "typings/browser.d.ts",
+    "typings/browser",
+    "src"
+  ],
+  "files" : [
+    "node_modules/typescript/lib/lib.es6.d.ts"
+  ],
+  "compileOnSave": false
+}

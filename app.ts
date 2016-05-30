@@ -1,9 +1,9 @@
-/// <reference path="./typings/main" />
-import * as PiStation from '../client/PiStation.ts';
-import {PiStationServer, PiStationServerEvent} from './app/server';
+/// <reference path="./typings/index" />
+import * as PiStation from "./node_modules/pistation-definitions/PiStation.ts";
+import {Server, ServerEvent} from './app/server';
 import {TestModule} from "./connector_modules/test-connector/test-connector.module";
 
-const app = new PiStationServer();
+const app = new Server();
 
 const module =   new PiStation.Module(
     'kakuLights',
@@ -16,6 +16,6 @@ const module =   new PiStation.Module(
 //app.addModule(module);
 const testModule : TestModule = new TestModule();
 app.addModule(testModule);
-app.on(`${PiStation.Events.CLIENT_DISCONNECTED}`).subscribe(function (event : PiStationServerEvent) {
+app.on(`${PiStation.Events.CLIENT_DISCONNECTED}`).subscribe(function (event : ServerEvent) {
     console.log("disconnecting");
 });

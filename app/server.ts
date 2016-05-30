@@ -1,14 +1,14 @@
 import * as io from "socket.io";
-import * as PiStation from "../../client/PiStation";
+import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
 import * as  Rx from 'rxjs/Rx';
 import Socket = SocketIO.Socket;
 
-export interface PiStationServerEvent {
+export interface ServerEvent {
     socket: SocketIO.Socket;
     data: any;
 }
 
-export class PiStationServer {
+export class Server {
     private socketServer:SocketIO.Server;
     private modules:PiStation.Module[] = [];
     private listeners:string[];
@@ -35,7 +35,7 @@ export class PiStationServer {
         this.clientConnections
             .forEach((socket : SocketIO.Socket) => this.registerEventsForClient(socket));
 
-        this.on(`${PiStation.Events.GET_ALL_MODULES}`).subscribe( (event : PiStationServerEvent) => {
+        this.on(`${PiStation.Events.GET_ALL_MODULES}`).subscribe( (event : ServerEvent) => {
             let json = this.modules.map(module => module.toDto());
             console.log('Returning modules:',  json);
             event.socket.emit(`${PiStation.Events.GET_ALL_MODULES}`, json);
@@ -47,11 +47,11 @@ export class PiStationServer {
        return this.modules.push(module);
     }
 
-    on(event:string):Rx.Observable<PiStationServerEvent> {
+    on(event:string):Rx.Observable<ServerEvent> {
         return this.clientConnections
             .flatMap((socket : SocketIO.Socket) =>
                 Rx.Observable.fromEvent(socket, event)
-                    .map((data: any) => <PiStationServerEvent>{data: data, socket: socket}));
+                    .map((data: any) => <ServerEvent>{data: data, socket: socket}));
     }
 
     private registerEventsForClient(socket:SocketIO.Socket){
