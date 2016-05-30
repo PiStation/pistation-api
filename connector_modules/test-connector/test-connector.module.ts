@@ -3,6 +3,11 @@ import * as PiStation from "../../node_modules/pistation-definitions/PiStation.t
 import {Observable} from 'rxjs/Rx';
 import * as Rx from 'rxjs/Rx';
 
+class test {
+    abc(){
+
+    }
+}
 export class TestModule extends PiStation.Module implements PiStation.AbstractModule {
     static moduleId:string;
     static DIM_LIGHT_EVENT = new PiStation.ModuleEvent(TestModule.moduleId,'dimLight');
@@ -13,8 +18,20 @@ export class TestModule extends PiStation.Module implements PiStation.AbstractMo
         let dummyFunction = new PiStation.Function('powerControl', [new PiStation.Argument('enabled', 'bool')]);
 
         this.addFunction(dummyFunction); //register on module
-        dummyFunction.callStream.subscribe((data : any) => console.log('command received', data));
     }
+
+
+    powerControl(finishCallback: ()=>void, enabled : boolean) {
+        //do module shit
+        console.log('Powercontrol ran with enabled var being ', enabled);
+        setTimeout(function() {
+            finishCallback();
+        }, 5000);
+        //finishCallback();
+        //connector433.enable();
+    }
+
+
 
     //asyncDummyFunction(args : PiStation.Argument[]){
     //    console.log(`Called Dummy Function with arguments ${args}`);
