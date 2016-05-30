@@ -1,0 +1,8 @@
+{
+  "name": "pistation-server",
+  "version": false,
+  "dependencies": {},
+  "ambientDependencies": {
+    "socket.io": "registry:dt/socket.io#1.4.4+20160317120654"
+  }
+}
