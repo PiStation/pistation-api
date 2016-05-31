@@ -35,9 +35,29 @@ fs.readdir(moduleDir, function( err, files ) {
                     }
                     console.log('Found module "%s" from "%s"', obj.name, obj.author);
 
-                    obj.pistation.modules.forEach(function(key) {
-                        fs.appendFileSync(autoloadModulesFile, "export * from './"+file+"/"+key.toLowerCase()+".module.ts'\r\n");
+                    fs.readdir(moduleName, function( err, moduleFiles ) {
+                        if (err) {
+                            console.error("Could not open module directory " + moduleName, err);
+                            process.exit(1);
+                        }
+
+                        moduleFiles.forEach( function( moduleFile, index ) {
+                            // Make one pass and make the file complete
+                            var moduleName = moduleDir + '/' + file + '/' + moduleFile;
+                            fs.stat(moduleName, function( error, stat ) {
+                                if( error ) {
+                                    console.error( "Error stating file.", error );
+                                    return;
+                                }
+
+                                if (stat.isFile() && moduleFile.endsWith('.module.ts')) { // and filename ends with .module.ts
+                                    console.log('Autoload generated for ' + moduleFile);
+                                    fs.appendFileSync(autoloadModulesFile, "export * from './"+file+"/"+moduleFile+"'\r\n");
+                                }
+                            });
+                        });
                     });
+
                 });
             }
         });
@@ -45,8 +65,3 @@ fs.readdir(moduleDir, function( err, files ) {
 });
 
 
-/*
- import {Dummy} from "./modules/module-dummy/dummy.module";
- const dummyModule : Dummy = new Dummy();
- app.addModule(dummyModule);
- */
