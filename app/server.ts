@@ -22,7 +22,6 @@ export class Server {
 
         this.clientConnections = Rx.Observable.create((observer : any) => {
             this.socketServer.on(`${PiStation.Events.CLIENT_CONNECTED}`,(socket : SocketIO.Socket) => observer.next(socket));
-            this.socketServer.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete());
 
             this.socketServer.on('error', (error : any) => {
                 console.log('ERROR', error);
