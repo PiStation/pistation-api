@@ -2,13 +2,17 @@
 import * as PiStation from "./node_modules/pistation-definitions/PiStation.ts";
 import {Server, ServerEvent} from './app/server';
 import * as Rx from 'rxjs/Rx';
+import * as Modules from './modules/autoload';
+import * as Connectors from './connectors/autoload';
 
 const app = new Server();
 
-const module = new PiStation.Module(
-    'kakuLights',
-    [
-        new PiStation.Function('powerControl', [new PiStation.Argument('enabled', 'bool')]),
-        new PiStation.Function('dim', [new PiStation.Argument('dimmingLevel', 'bit')])
-    ]
-);
+class PiStationServer {
+    constructor() {
+
+    }
+}
+for (var i in Modules) {
+    let module = new Modules[i](app);
+    app.addModule(module);
+}

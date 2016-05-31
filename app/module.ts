@@ -4,7 +4,7 @@ import {Function} from '../node_modules/pistation-definitions/PiStation.ts';
 import {ServerEvent} from "./server";
 
 export class Module extends PiStation.Module {
-    functions;
+
     functionClientSubscriptions;
 
     constructor(name: string, functionArray: Function[] = []) {
@@ -17,10 +17,9 @@ export class Module extends PiStation.Module {
                 .fromEvent(clientSocket, `${func.eventName}`)
                 .map((json : any) => new Function(func.name, json))
                 .takeUntil(Rx.Observable.create(observer =>
-                    clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete()))
-                )
+                    clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
                 .forEach((func : Function) => {
-                    this[func.name](...func.arguments);
+                    this[func.name](...func.arguments)
                 })
         );
         console.log(this.functionClientSubscriptions);
