@@ -36,17 +36,27 @@ fs.readdir(moduleDir, function( err, files ) {
                     if (err) throw err; // we'll not consider error handling for now
                     var obj = JSON.parse(data);
                     if (obj.pistationVersion != '1') {
-                        console.log('"%s" is not a valid PiStation module');
+                        console.log('"%s" is not a valid PiStation module', moduleName);
                         return;
                     }
                     console.log('Found module "%s" from "%s"', obj.name, obj.author);
+
+                    /*System.import(moduleName + '/js/dummy.module.js').then(refToLoadedModule => {
+                        app.addModule(refToLoadedModule);
+                    });*/
+
+                    var ImportedModule = require(moduleName + '/ts/dummy.module.ts');
+                    console.log(ImportedModule.Dummy);
+                    app.addModule(ImportedModule.Dummy);
+                    //console.log(ImportedModule);
                     //Load it up
                 });
             }
         });
     });
 });
-
+/*
 import {Dummy} from "./modules/module-dummy/dummy.module";
 const dummyModule : Dummy = new Dummy();
 app.addModule(dummyModule);
+*/
