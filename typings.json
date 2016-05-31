@@ -3,7 +3,6 @@
   "version": false,
   "dependencies": {},
   "globalDependencies": {
-    "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "node": "registry:dt/node#6.0.0+20160524002506",
     "socket.io": "registry:dt/socket.io#1.4.4+20160317120654"
   }
