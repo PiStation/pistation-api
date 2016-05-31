@@ -1,5 +1,5 @@
 {
-  "name": "pistation-server",
+  "name": "pistation-api",
   "version": false,
   "dependencies": {},
   "globalDependencies": {

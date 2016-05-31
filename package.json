@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "typings install"
+    "start": "ts-node app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,6 @@
     "pistation-definitions": "git+https://github.com/PiStation/pistation-definitions.git",
     "rx": "^4.1.0",
     "rxjs": "^5.0.0-beta.8",
-    "socket.io": "^1.4.6",
-    "typings": "^0.8.1"
+    "socket.io": "^1.4.6"
   }
 }
