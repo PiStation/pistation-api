@@ -5,6 +5,10 @@ var autoloadConnectorsFile = "connectors/autoload.ts";
 fs.closeSync(fs.openSync(autoloadModulesFile, 'w'));
 fs.closeSync(fs.openSync(autoloadConnectorsFile, 'w'));
 
+fs.appendFileSync(autoloadModulesFile, "export const MOD_AUTOLOAD=1;\r\n");
+fs.appendFileSync(autoloadConnectorsFile, "export const CON_AUTOLOAD=1;\r\n");
+
+console.log('Generating module & connector autoload files for PiStation...');
 var moduleDir = './modules';
 fs.readdir(moduleDir, function( err, files ) {
     if (err) {
@@ -32,7 +36,7 @@ fs.readdir(moduleDir, function( err, files ) {
                     console.log('Found module "%s" from "%s"', obj.name, obj.author);
 
                     obj.pistation.modules.forEach(function(key) {
-                        fs.appendFileSync(autoloadModulesFile, "export * from '"+file+"/"+key.toLowerCase()+".module.ts'\r\n");
+                        fs.appendFileSync(autoloadModulesFile, "export * from './"+file+"/"+key.toLowerCase()+".module.ts'\r\n");
                     });
                 });
             }
