@@ -1,7 +1,7 @@
 /// <reference path="./typings/index" />
 import * as PiStation from "./node_modules/pistation-definitions/PiStation.ts";
 import {Server, ServerEvent} from './app/server';
-import {TestModule} from "./connector_modules/test-connector/test-connector.module";
+import {Dummy} from "./modules/module-dummy/dummy.module";
 import * as Rx from 'rxjs/Rx';
 
 const app = new Server();
@@ -15,5 +15,5 @@ const module = new PiStation.Module(
 );
 
 //app.addModule(module);
-const testModule : TestModule = new TestModule();
-app.addModule(testModule);
+const dummyModule : Dummy = new Dummy();
+app.addModule(dummyModule);
