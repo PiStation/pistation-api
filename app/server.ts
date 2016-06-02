@@ -12,7 +12,6 @@ export interface ServerEvent {
 export class Server {
     private socketServer:SocketIO.Server;
     private modules:PiStation.Module[] = [];
-    private listeners:string[];
 
     public clientConnections:Rx.Observable<SocketIO.Socket>;
 
@@ -21,7 +20,7 @@ export class Server {
         console.log('Server Started');
 
         this.clientConnections = Rx.Observable.create((observer : any) => {
-            this.socketServer.on(`${PiStation.Events.CLIENT_CONNECTED}`,(socket : SocketIO.Socket) => observer.next(socket));
+            this.socketServer.on(`${PiStation.Events.CLIENT_CONNECTED}`, (socket : SocketIO.Socket) => observer.next(socket));
 
             this.socketServer.on('error', (error : any) => {
                 console.log('ERROR', error);
@@ -41,6 +40,9 @@ export class Server {
             event.socket.emit(`${PiStation.Events.GET_ALL_MODULES}`, json);
         });
 
+        this.on(`${PiStation.Events.GET_ALL_ACTIONS}`).subscribe((event : ServerEvent) => {
+            console.log('Asking all actions');
+        });
     }
 
     addModule(module:Module) {

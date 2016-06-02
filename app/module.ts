@@ -18,8 +18,10 @@ export class Module extends PiStation.Module {
                 .map((json : any) => new Function(func.name, json))
                 .takeUntil(Rx.Observable.create(observer =>
                     clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
-                .forEach((func : Function) => {
-                    this[func.name](...func.arguments)
+                .map((func : Function) => {
+                    let functionUpdateStream = this[func.name](...func.arguments)
+                    console.log('functieUpdateStream', functionUpdateStream);
+                    return functionUpdateStream;
                 })
         );
         console.log(this.functionClientSubscriptions);
