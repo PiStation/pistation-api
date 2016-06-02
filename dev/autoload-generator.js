@@ -64,4 +64,58 @@ fs.readdir(moduleDir, function( err, files ) {
     });
 });
 
+var connectorDir = './connectors';
+fs.readdir(connectorDir, function( err, files ) {
+    if (err) {
+        console.error("Could not list the connector directory.", err);
+        process.exit(1);
+    }
+
+    files.forEach( function( file, index ) {
+        // Make one pass and make the file complete
+        var connectorName = connectorDir + '/' + file;
+        fs.stat(connectorName, function( error, stat ) {
+            if( error ) {
+                console.error( "Error stating file.", error );
+                return;
+            }
+
+            if( stat.isDirectory() ) {
+                fs.readFile(connectorName + '/package.json', 'utf8', function (err, data) {
+                    if (err) throw err; // we'll not consider error handling for now
+                    var obj = JSON.parse(data);
+                    if (obj.pistation == undefined) {
+                        console.log('"%s" is not a valid PiStation connector', connectorName);
+                        return;
+                    }
+                    console.log('Found connector "%s" from "%s"', obj.name, obj.author);
+
+                    fs.readdir(connectorName, function( err, connectorFiles ) {
+                        if (err) {
+                            console.error("Could not open connector directory " + connectorName, err);
+                            process.exit(1);
+                        }
+
+                        connectorFiles.forEach( function( connectorFile, index ) {
+                            // Make one pass and make the file complete
+                            var connectorName = connectorDir + '/' + file + '/' + connectorFile;
+                            fs.stat(connectorName, function( error, stat ) {
+                                if( error ) {
+                                    console.error( "Error stating file.", error );
+                                    return;
+                                }
+
+                                if (stat.isFile() && connectorFile.endsWith('.connector.ts')) { // and filename ends with .connector.ts
+                                    console.log('Autoload generated for ' + connectorFile);
+                                    fs.appendFileSync(autoloadConnectorsFile, "export * from './"+file+"/"+connectorFile+"'\r\n");
+                                }
+                            });
+                        });
+                    });
+
+                });
+            }
+        });
+    });
+});
 
