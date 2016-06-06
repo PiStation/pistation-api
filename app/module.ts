@@ -24,7 +24,9 @@ export class Module extends PiStation.Module {
                     return functionUpdateStream;
                 })
         );
-        console.log(this.functionClientSubscriptions);
+        this.functionClientSubscriptions.forEach((event: any) => {
+            console.log('received: ', event)
+        });
     }
 
 }
