@@ -18,16 +18,13 @@ export class Module extends PiStation.Module {
                     .takeUntil(Rx.Observable.create(observer =>
                         clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
 
-                    //.map((args : any) => {
-                    //    args.forEach(JsonArgument => func.arguments.find(functionArgument => functionArgument.key == JsonArgument))
-                    //})
                     //.map((func : Function) => {
                     //    let functionUpdateStream = this[func.name](...func.arguments);
                     //    return functionUpdateStream;
                     //})
-                    .subscribe((event) => {
-                        let functionUpdateStream = this[func.name](...func.arguments);
-                        console.log('function called', event);
+                    .subscribe((argsJson) => {
+                        let functionUpdateStream = this[func.name](argsJson);
+                        console.log('function called', argsJson);
                     })
 
             });
