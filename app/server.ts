@@ -3,6 +3,7 @@ import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
 import * as  Rx from 'rxjs/Rx';
 import Socket = SocketIO.Socket;
 import {Module} from "./module";
+import {Connector} from "./connector";
 
 export interface ServerEvent {
     socket: SocketIO.Socket;
@@ -12,6 +13,7 @@ export interface ServerEvent {
 export class Server {
     private socketServer:SocketIO.Server;
     private modules:PiStation.Module[] = [];
+    private connectors:PiStation.Connector[] = [];
 
     public clientConnections:Rx.Observable<SocketIO.Socket>;
 
@@ -47,6 +49,19 @@ export class Server {
 
     addModule(module:Module) {
        return this.modules.push(module);
+    }
+
+    addConnector(connector:Connector) {
+        return this.connectors.push(connector);
+    }
+
+    getConnector(connectorName:string) {
+
+        return this.connectors.find(connectorObject => (connectorObject.name === connectorName));
+    }
+
+    getModule(moduleName:string) {
+        return this.modules.find(moduleObject => (moduleObject.name === moduleName));
     }
 
     on(event:string):Rx.Observable<ServerEvent> {
