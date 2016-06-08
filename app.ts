@@ -12,16 +12,17 @@ class PiStationServer {
 
     }
 }
-for (var i in Modules) {
-    if (typeof Modules[i] == 'function') {
-        let module = new Modules[i](app);
-        app.addModule(module);
-    }
-}
 
 for (var i in Connectors) {
     if (typeof Connectors[i] == 'function') {
         let connector = new Connectors[i](app);
-        //app.addConnector(connector);
+        app.addConnector(connector);
+    }
+}
+
+for (var i in Modules) {
+    if (typeof Modules[i] == 'function') {
+        let module = new Modules[i](app);
+        app.addModule(module);
     }
 }
