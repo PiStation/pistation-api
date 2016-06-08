@@ -12,21 +12,35 @@ export class Module extends PiStation.Module {
     }
 
     registerFunctionCallsForClient(clientSocket : any) {
-        this.functionClientSubscriptions = this.functions.map((func:PiStation.Function) =>
-            Rx.Observable
-                .fromEvent(clientSocket, `${func.eventName}`)
-                .map((json : any) => new Function(func.name, json))
-                .takeUntil(Rx.Observable.create(observer =>
-                    clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
-                .map((func : Function) => {
-                    let functionUpdateStream = this[func.name](...func.arguments)
-                    console.log('functieUpdateStream', functionUpdateStream);
-                    return functionUpdateStream;
-                })
-        );
-        this.functionClientSubscriptions.forEach((event: any) => {
-            console.log('received: ', event)
-        });
+            this.functions.forEach((func:PiStation.Function) => {
+                Rx.Observable
+                    .fromEvent(clientSocket, `${func.eventName}`)
+                    .takeUntil(Rx.Observable.create(observer =>
+                        clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
+
+                    //.map((args : any) => {
+                    //    args.forEach(JsonArgument => func.arguments.find(functionArgument => functionArgument.key == JsonArgument))
+                    //})
+                    //.map((func : Function) => {
+                    //    let functionUpdateStream = this[func.name](...func.arguments);
+                    //    return functionUpdateStream;
+                    //})
+                    .subscribe((event) => {
+                        let functionUpdateStream = this[func.name](...func.arguments);
+                        console.log('function called', event);
+                    })
+
+            });
+                //.takeUntil(Rx.Observable.create(observer =>
+                //    clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
+        //this.functionClientSubscriptions.forEach((func: Rx.Observable<Rx.Observable<string>>) => {
+        //    //func.forEach((functionUpdates: Rx.Observable<string>) => {
+        //    //    functionUpdates
+        //    //        .takeUntil()
+        //    //        .subscribe()
+        //    //    console.log('function being called: ', func);
+        //    //});
+        //});
     }
 
 }
