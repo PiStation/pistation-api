@@ -10,21 +10,24 @@ export class Module extends PiStation.Module {
     constructor(name: string, functionArray: Function[] = []) {
         super(name,functionArray);
     }
-
+    private clientDisconnectStream(clientSocket) {
+        return Rx.Observable.create(observer =>
+            clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete()));
+    }
     registerFunctionCallsForClient(clientSocket : any) {
             this.functions.forEach((func:PiStation.Function) => {
                 Rx.Observable
                     .fromEvent(clientSocket, `${func.eventName}`)
-                    .takeUntil(Rx.Observable.create(observer =>
-                        clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`,(event : ServerEvent) => observer.complete())))
-
-                    //.map((func : Function) => {
-                    //    let functionUpdateStream = this[func.name](...func.arguments);
-                    //    return functionUpdateStream;
-                    //})
+                    .takeUntil(this.clientDisconnectStream(clientSocket))
                     .subscribe((argsJson) => {
-                        let functionUpdateStream = this[func.name](argsJson);
                         console.log('function called', argsJson);
+                        let functionUpdateStream : Rx.Observable<string> = this[func.name](argsJson);
+
+                        functionUpdateStream.takeUntil(this.clientDisconnectStream(clientSocket))
+                            .subscribe((update : string) => {
+                                console.log(`emitting ${func.eventName} function update`, update);
+                                clientSocket.emit(`${func.eventName}`, update);
+                            });
                     })
 
             });

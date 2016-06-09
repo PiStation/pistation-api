@@ -37,9 +37,9 @@ export class Server {
             });
 
         this.on(`${PiStation.Events.GET_ALL_MODULES}`).subscribe( (event : ServerEvent) => {
-            let json = this.modules.map(module => module.toDto());
-            console.log('Returning modules:',  json);
-            event.socket.emit(`${PiStation.Events.GET_ALL_MODULES}`, json);
+            let data = this.modules.map(module => module.toDto());
+            console.log('Returning modules:',  data);
+            event.socket.emit(`${PiStation.Events.GET_ALL_MODULES}`, data);
         });
 
         this.on(`${PiStation.Events.GET_ALL_ACTIONS}`).subscribe((event : ServerEvent) => {
