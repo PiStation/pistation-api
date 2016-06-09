@@ -27,6 +27,8 @@ export class Module extends PiStation.Module {
                             .subscribe((update : string) => {
                                 console.log(`emitting ${func.eventName} function update`, update);
                                 clientSocket.emit(`${func.eventName}`, update);
+                            },(error : any) => {
+                                clientSocket.emit(`${func.eventName}`, error);
                             });
                     })
 
