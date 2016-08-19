@@ -1,4 +1,3 @@
-/// <reference path="./typings/index" />
 /// <reference path="./typings/main" />
 import * as PiStation from "./node_modules/pistation-definitions/PiStation.ts";
 import {Server, ServerEvent} from './app/server';

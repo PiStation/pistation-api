@@ -1,6 +1,7 @@
 import * as io from "socket.io";
 import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
 import * as  Rx from 'rxjs/Rx';
+import * as RxNode from 'rx-node';
 var levelup = require('levelup');
 import Socket = SocketIO.Socket;
 import {Module} from "./module";
@@ -23,19 +24,14 @@ export class Server {
         console.log('Server Started');
         this.db = levelup('./pistationData');
 
-        // 2) put a key & value
-        this.db.put('name', 'LevelUP', (err) => {
+        this.db.put('rooms', {rooms:[{name: 'Huiskamer'}, {name:'Slaapkamer'}]}, (err) => {
             if (err) return console.log('Ooops!', err) // some kind of I/O error
+        });
 
-            // 3) fetch by key
-            this.db.get('name', function (err, value) {
-                if (err) return console.log('Ooops!', err) // likely the key was not found
-
-                // ta da!
-                console.log('name=' + value)
-            })
+        RxNode.fromStream(this.db.createReadStream()).subscribe((data : any) => {
+            // ta da!
+            console.log(`${data.value}`)
         })
-
         this.socketServer = io(port);
         this.initClientSocketConnections();
         this.subscribeForGlobalClientEvents();
