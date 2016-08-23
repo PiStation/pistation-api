@@ -123,6 +123,6 @@ export class Server {
 }
 
 export interface StoreReadData {
-    key: any;
-    value: any;
+    key: string;
+    value: string;
 }
