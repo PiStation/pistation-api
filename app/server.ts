@@ -26,7 +26,7 @@ export class Server {
 
     constructor(private port:number = 31415) {
         console.log('Server Started');
-        this.db = sublevel(levelup('./pistationData'));
+        this.db = sublevel(levelup('./data'));
         this.socketServer = io(port);
 
         this.initClientSocketConnections();
