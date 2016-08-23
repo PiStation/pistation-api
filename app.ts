@@ -1,5 +1,5 @@
-/// <reference path="./typings/main" />
-import * as PiStation from "./node_modules/pistation-definitions/PiStation.ts";
+/// <reference path="./typings/index" />
+import * as PiStation from "./node_modules/pistation-definitions/PiStation";
 import {Server, ServerEvent} from './app/server';
 import * as Rx from 'rxjs/Rx';
 import * as Modules from './modules/autoload';

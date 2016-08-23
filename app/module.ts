@@ -1,6 +1,6 @@
-import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
+import * as PiStation from "../node_modules/pistation-definitions/PiStation";
 import * as Rx from 'rxjs/Rx';
-import {Function} from '../node_modules/pistation-definitions/PiStation.ts';
+import {Function} from '../node_modules/pistation-definitions/PiStation';
 import {ServerEvent} from "./server";
 import {Server} from "./server";
 interface ModuleConfigStore extends Sublevel {

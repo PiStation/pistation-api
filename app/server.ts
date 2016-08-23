@@ -1,5 +1,6 @@
+/// <reference path="../typings/index" />
 import * as io from "socket.io";
-import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
+import * as PiStation from "../node_modules/pistation-definitions/PiStation";
 import * as  Rx from 'rxjs/Rx';
 import * as RxNode from 'rx-node';
 const levelup = require('levelup');
