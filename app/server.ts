@@ -91,8 +91,7 @@ export class Server {
     }
 
     getConnector(connectorName:string) {
-
-        return this.connectors.filter(connectorObject => (connectorObject.name === connectorName));
+        return this.connectors.filter(connectorObject => (connectorObject.name === connectorName))[0];
     }
 
     getModule(moduleName:string) {
