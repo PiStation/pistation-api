@@ -1,4 +1,4 @@
-import * as PiStation from "../node_modules/pistation-definitions/PiStation.ts";
+import * as PiStation from "../node_modules/pistation-definitions/PiStation";
 
 /**
  * Maybe needed in the future..
