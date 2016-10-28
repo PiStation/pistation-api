@@ -5,7 +5,6 @@ import * as Rx from 'rxjs/Rx';
 import * as Modules from './modules/autoload';
 import * as Connectors from './connectors/autoload';
 
-
 class PiStationBootloader {
     private serverInstance : Server;
     constructor() {

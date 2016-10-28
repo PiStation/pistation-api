@@ -3,20 +3,29 @@ import * as Rx from 'rxjs/Rx';
 import {Function} from '../node_modules/pistation-definitions/PiStation';
 import {ServerEvent} from "./server";
 import {Server} from "./server";
+import {AssetsService} from "./icons";
 interface ModuleConfigStore extends Sublevel {
 
 }
 export class Module extends PiStation.Module {
 
     functionClientSubscriptions;
+    public assets : AssetsService;
+    static DEFAULT_ICON_SVG : string = 'assets/default.svg';
 
     constructor(public name:string, functionArray:Function[] = []) {
         super(name, functionArray);
+        this.assets = new AssetsService();
+        this.assets.addIcon('default', Module.DEFAULT_ICON_SVG);
     }
 
     private clientDisconnectStream(clientSocket) {
         return Rx.Observable.create(observer =>
             clientSocket.on(`${PiStation.Events.CLIENT_DISCONNECTED}`, (event:ServerEvent) => observer.complete()));
+    }
+
+    getModuleAssetRegistry() : AssetsService {
+        return this.assets;
     }
 
     registerFunctionCallsForClient(clientSocket:any) {
@@ -33,7 +42,7 @@ export class Module extends PiStation.Module {
                             .subscribe((update:string) => {
                                     console.log(`emitting ${func.eventName} function update`, update);
                                     clientSocket.emit(`${func.eventName}`, update);
-                                },
+                                   },
                                 (error:any) => clientSocket.emit(`${func.errorEventName}`, error),
                                 () => {
                                     console.log('completed function');

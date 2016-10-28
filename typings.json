@@ -2,7 +2,8 @@
   "name": "pistation-api",
   "version": false,
   "dependencies": {
-    "es6-promise": "registry:npm/es6-promise#3.0.0+20160723033700"
+    "es6-promise": "registry:npm/es6-promise#3.0.0+20160723033700",
+    "express": "registry:npm/express#4.14.0+20160925001530"
   },
   "globalDependencies": {
     "level-sublevel": "registry:dt/level-sublevel#0.0.0+20160316155526",
