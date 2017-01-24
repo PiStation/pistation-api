@@ -1,28 +1,16 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "lib": ["es6", "dom"],
+    "types": ["reflect-metadata"],
     "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "noLib": false,
+    "moduleResolution": "node",
+    "experimentalDecorators":true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
-    "pretty": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "noImplicitReturns": true,
-    "noImplicitUseStrict": false
+    "declaration": false
   },
   "exclude": [
-    "node_modules",
-    "dist",
-    "typings/browser.d.ts",
-    "typings/browser",
-    "src"
-  ],
-  "files" : [
-    "node_modules/typescript/lib/lib.es6.d.ts"
-  ],
-  "compileOnSave": false
+    "node_modules"
+  ]
 }
