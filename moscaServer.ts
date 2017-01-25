@@ -48,32 +48,32 @@ settings : MoscaSettings = {
             .start().then((server) => {
                 $log.info('Mosca Server started...');
                 server.on('clientConnected', function(client) {
-                    console.log('client connected', client.id);
+                    $log.info('client connected', client.id);
                 });
 
 // fired when a message is received
                 server.on('published', function(packet, client) {
-                    console.log('Published : ', packet.payload);
+                    $log.info('Published : ', packet.payload);
                 });
 
 // fired when a client subscribes to a topic
                 server.on('subscribed', function(topic, client) {
-                    console.log('subscribed : ', topic);
+                    $log.info('subscribed : ', topic);
                 });
 
 // fired when a client subscribes to a topic
                 server.on('unsubscribed', function(topic, client) {
-                    console.log('unsubscribed : ', topic);
+                    $log.info('unsubscribed : ', topic);
                 });
 
 // fired when a client is disconnecting
                 server.on('clientDisconnecting', function(client) {
-                    console.log('clientDisconnecting : ', client.id);
+                    $log.info('clientDisconnecting : ', client.id);
                 });
 
 // fired when a client is disconnected
                 server.on('clientDisconnected', function(client) {
-                    console.log('clientDisconnected : ', client.id);
+                    $log.info('clientDisconnected : ', client.id);
                 });
             })
     }
