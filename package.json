@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/resin-io-projects/simple-server-node#readme",
   "dependencies": {
+    "@types/mongoose": "^4.7.3",
     "@types/node": "^6.0.38",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
@@ -35,9 +36,12 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "method-override": "^2.3.6",
+    "mongoose": "^4.7.8",
     "morgan": "^1.7.0",
-    "ts-express-decorators": "1.2.2",
+    "mosca": "^2.2.0",
     "pistation-definitions": "git+https://github.com/PiStation/pistation-definitions.git",
+    "ts-express-decorators": "1.2.2",
+    "ts-json-properties": "^1.1.2",
     "typescript": "^2.0.2"
   },
   "devDependencies": {

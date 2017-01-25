@@ -2,6 +2,8 @@
  * Test
  */
 import {Server} from "./server";
+import {MoscaServer} from "./moscaServer";
 
 
-Server.Initialize();
+const restApi = Server.Initialize();
+const mqttServer = MoscaServer.Initialize();
