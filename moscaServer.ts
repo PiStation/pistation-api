@@ -9,26 +9,28 @@ interface MoscaServerPubSubSettings {
 }
 interface MoscaSettings {
     port: number;
-    backend: MoscaServerPubSubSettings;
-    factory: any;
+    backend?: MoscaServerPubSubSettings;
+    factory?: any;
 
 }
 export class MoscaServer {
     private mosca : any;
-    settings : MoscaSettings = {
+
+    //        backend: {
+    //using ascoltatore
+//     type: 'mongo',
+//     url: 'mongodb://localhost:27017/mqtt',
+//     pubsubCollection: 'ascoltatori',
+//     mongo: {}
+// },
+
+settings : MoscaSettings = {
         port :1883,
-        backend: {
-            //using ascoltatore
-            type: 'mongo',
-            url: 'mongodb://localhost:27017/mqtt',
-            pubsubCollection: 'ascoltatori',
-            mongo: {}
-        },
         factory:mosca.persistence.Memory
     };
 
     setup(settings : MoscaSettings) {
-        this.settings = settings;
+            this.settings = settings;
     }
     start() : Promise<any> {
         return new Promise<any>((resolve, reject) => {
