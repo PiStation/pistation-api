@@ -3,18 +3,25 @@ import * as Express from "express";
 import {$log} from "ts-log-debug";
 import {ServerLoader, IServerLifecycle} from "ts-express-decorators";
 import Path = require("path");
+import PluginService from "./services/PluginService";
 
 export class Server extends ServerLoader implements IServerLifecycle {
+    private appPath : string;
     constructor() {
         super();
-        let appPath = Path.resolve(__dirname);
+        this.appPath = Path.resolve(__dirname);
 
         this.setEndpoint('/rest')
-            .scan(appPath + "/controllers/**/**.js")
+            .scan(this.appPath + "/controllers/**/**.js")
+            .scan(this.appPath + "/services/**/**.js")
             .createHttpServer(8000)
             .createHttpsServer({
                 port: 8080
             });
+    }
+
+    $onInit() {
+        PluginService.scanPlugins(this.appPath + '/plugins/**/**.js');
     }
 
     $onMountingMiddlewares(): void|Promise<any> {

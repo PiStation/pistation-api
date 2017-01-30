@@ -9,16 +9,21 @@ export const schema = new Schema({
         type: String,
         required: true
     },
-    color: {
+    deviceName: {
+        type: String,
+        required: true
+    },
+    vendor: {
         type: String,
         required: true
     }
 });
 
-export interface DeviceInterface extends Document {
+export interface DeviceInterface {
     _id: string;
     name: string;
-    type: string
+    vendor: string;
+    deviceName: string;
 }
 
-export const Device = model<DeviceInterface>('Calendar', schema);
+export const Device = model('Device', schema);

@@ -7,6 +7,7 @@ import {
 
 import {$log} from "ts-log-debug";
 import * as Express from "express";
+import PluginService from "../../services/PluginService";
 
 interface ICalendar {
     id: string;
@@ -22,10 +23,10 @@ interface ICalendar {
  */
 @Controller("/devices")
 export default class CalendarCtrl {
-
+    constructor(){
+    }
     @Get("/classic/:id")
     public findClassic(request: any, response: any): ICalendar {
-        console.log('testtttt');
         return {id: request.params.id, name: "test"};
     }
 

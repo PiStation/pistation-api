@@ -1,5 +1,6 @@
 import * as mosca from 'mosca';
 import {$log} from "ts-log-debug";
+const fork = require('child_process').fork;
 
 interface MoscaServerPubSubSettings {
     type: string;
@@ -24,7 +25,7 @@ export class MoscaServer {
 //     mongo: {}
 // },
 
-settings : MoscaSettings = {
+        settings : MoscaSettings = {
         port :1883,
         factory:mosca.persistence.Memory
     };
@@ -37,7 +38,7 @@ settings : MoscaSettings = {
             this.mosca = new mosca.Server(this.settings, ((err, srv) => {
                 if (err) {
                     $log.error('Mosca Server start failed');
-                    reject(err);
+                    return reject(err);
                 }
                 resolve(srv);
             }));
@@ -52,22 +53,22 @@ settings : MoscaSettings = {
                     $log.info('client connected', client.id);
                 });
 
-// fired when a message is received
+                // fired when a message is received
                 server.on('published', (packet, client) => {
                     $log.info('Published : ', packet.payload);
                 });
 
-// fired when a client subscribes to a topic
+                // fired when a client subscribes to a topic
                 server.on('subscribed', (topic, client) => {
                     $log.info('subscribed : ', topic);
                 });
 
-// fired when a client subscribes to a topic
+                // fired when a client subscribes to a topic
                 server.on('unsubscribed', (topic, client) => {
                     $log.info('unsubscribed : ', topic);
                 });
 
-// fired when a client is disconnecting
+                // fired when a client is disconnecting
                 server.on('clientDisconnecting', (client) => {
                     $log.info('clientDisconnecting : ', client.id);
                 });
