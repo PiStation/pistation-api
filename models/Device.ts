@@ -20,10 +20,17 @@ export const schema = new Schema({
 });
 
 export interface DeviceInterface {
+    _type: string;
     _id: string;
     name: string;
     vendor: string;
-    deviceName: string;
+    deviceName?: string;
+}
+export class Device implements DeviceInterface {
+    _type = 'device';
+    _id = 'UnknownDevice';
+    name = 'Unknown Device';
+    vendor = 'Company X';
 }
 
-export const Device = model('Device', schema);
+//export const Device = model('Device', schema);

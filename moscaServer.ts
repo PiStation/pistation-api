@@ -55,7 +55,7 @@ export class MoscaServer {
 
                 // fired when a message is received
                 server.on('published', (packet, client) => {
-                    $log.info('Published : ', packet.payload);
+                    $log.info('Published : ',packet.payload.toString());
                 });
 
                 // fired when a client subscribes to a topic

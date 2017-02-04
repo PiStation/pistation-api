@@ -13,7 +13,9 @@ export default class PluginService {
         files.forEach((file: string) => {
             try {
                 $log.debug("[PluginService] Loading plugin:", file);
-                require(file);
+                let plugin = require(file);
+                $log.debug("[PluginService] init:", plugin.HueLight._type);
+
                 nbFiles++;
             } catch (err) {
                 /* istanbul ignore next */
