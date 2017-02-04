@@ -40,6 +40,7 @@
     "mongoose": "^4.7.8",
     "morgan": "^1.7.0",
     "mosca": "^2.2.0",
+    "mqtt": "^2.3.1",
     "node-hue-api": "^2.4.1",
     "pistation-definitions": "git+https://github.com/PiStation/pistation-definitions.git",
     "rxjs": "^5.0.3",

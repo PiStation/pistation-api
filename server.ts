@@ -4,12 +4,15 @@ import {$log} from "ts-log-debug";
 import {ServerLoader, IServerLifecycle} from "ts-express-decorators";
 import Path = require("path");
 import PluginService from "./services/PluginService";
+import {MoscaServer} from "./moscaServer";
 
 export class Server extends ServerLoader implements IServerLifecycle {
     private appPath : string;
+    private mqttServer: Promise<MoscaServer>;
     constructor() {
         super();
         this.appPath = Path.resolve(__dirname);
+        this.mqttServer = MoscaServer.Initialize();
 
         this.setEndpoint('/rest')
             .scan(this.appPath + "/controllers/**/**.js")
@@ -17,7 +20,7 @@ export class Server extends ServerLoader implements IServerLifecycle {
             .createHttpServer(8000)
             .createHttpsServer({
                 port: 8080
-            });
+            })
     }
 
     $onInit() {
@@ -44,7 +47,10 @@ export class Server extends ServerLoader implements IServerLifecycle {
                 extended: true
             }));
 
-        return null;
+        let asyncPromises = this.mqttServer
+            .then((server : any) => server.attachHttpServer(this.httpServer));
+
+        return asyncPromises;
     }
 
     /**

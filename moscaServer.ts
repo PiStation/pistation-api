@@ -16,19 +16,10 @@ interface MoscaSettings {
 }
 export class MoscaServer {
     private mosca : any;
-
-    //        backend: {
-    //using ascoltatore
-//     type: 'mongo',
-//     url: 'mongodb://localhost:27017/mqtt',
-//     pubsubCollection: 'ascoltatori',
-//     mongo: {}
-// },
-
-        settings : MoscaSettings = {
-        port :1883,
-        factory:mosca.persistence.Memory
-    };
+    settings : MoscaSettings = {
+    port :1883,
+    factory:mosca.persistence.Memory
+};
 
     setup(settings : MoscaSettings) {
             this.settings = settings;
@@ -44,6 +35,8 @@ export class MoscaServer {
             }));
         });
     }
+
+
     static Initialize(){
         return new MoscaServer()
             .start()
@@ -77,6 +70,7 @@ export class MoscaServer {
                 server.on('clientDisconnected', (client) => {
                     $log.info('clientDisconnected : ', client.id);
                 });
+                return server;
             })
     }
 }
